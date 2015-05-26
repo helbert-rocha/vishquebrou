@@ -79,9 +79,10 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	private void logged(HttpServletRequest request, HttpServletResponse response, String fname, String username) throws ServletException, IOException{
-		
+		NameBean nameBean = new NameBean();
+		nameBean.setName(fname);
 		HttpSession session = request.getSession();
-		session.setAttribute("user", fname);
+		session.setAttribute("user",username);
 		session.setAttribute("isLoggedIn", true);
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();

@@ -1,7 +1,7 @@
 <jsp:include page="header.jsp"/>
 <jsp:include page="nav.jsp"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<md-content layout="column" layout-align="center center">
+<md-content layout="column" layout-align="center center" class="content-size">
     <div class="app-content">
         
         

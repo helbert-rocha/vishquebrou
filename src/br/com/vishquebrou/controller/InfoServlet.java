@@ -57,26 +57,50 @@ public class InfoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		String descryption  = request.getParameter("what");
+		String descryption  = request.getParameter("what").trim();
 		String newEnterprise = request.getParameter("enterprise");
-		
+		String status  = request.getParameter("status");
 		Long enterId = Long.parseLong(newEnterprise);
 		
+		int errors = 0;
 		
-		EnterpriseService enterpriseService = new EnterpriseService();
-		Enterprise enterprise = new Enterprise();
-		enterprise = enterpriseService.getById(enterId);
-		out.println(descryption);
-		out.println(enterprise);
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = new Date();
-		String currentDate = dateFormat.format(date);
-		InfoService infoService = new InfoService();
-		Info info = new Info(descryption,currentDate,"new",enterprise);
-		infoService.save(info);
-		String address = "/WEB-INF/views/thanks.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(address);
-		dispatcher.forward(request, response);
+		request.setAttribute("desc", descryption);
+		
+		if(descryption.equals("")){
+			request.setAttribute("errorDes", true);
+			errors = errors +1;
+		}
+		if(newEnterprise.equals("-1")){
+			request.setAttribute("errorEnt", true);
+			errors = errors +1;
+		}
+		
+		if(errors > 0){
+			
+			EnterpriseService enterpriseService = new EnterpriseService();
+			
+			
+			ArrayList<Enterprise> enList = (ArrayList<Enterprise>) enterpriseService.findAll();
+			request.setAttribute("enterprises", enList);
+			String address = "/WEB-INF/views/info.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+			dispatcher.forward(request, response);	
+		}else{
+			EnterpriseService enterpriseService = new EnterpriseService();
+			Enterprise enterprise = new Enterprise();
+			enterprise = enterpriseService.getById(enterId);
+			//out.println(descryption);
+			//out.println(enterprise);
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Date date = new Date();
+			String currentDate = dateFormat.format(date);
+			InfoService infoService = new InfoService();
+			Info info = new Info(descryption,currentDate,status,enterprise);
+			infoService.save(info);
+			String address = "/WEB-INF/views/thanks.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

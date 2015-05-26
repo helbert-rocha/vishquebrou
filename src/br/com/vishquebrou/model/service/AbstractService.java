@@ -26,6 +26,34 @@ public class AbstractService<PK, T> {
 		}
     }
 	
+	public void delete(T entity){
+        try{
+            JPAUtil.beginTransaction();            
+            dao.delete(entity);;
+            JPAUtil.commit();
+        }
+        catch(Exception e){            
+            JPAUtil.rollBack();
+        }
+        finally{
+			JPAUtil.closeEntityManager();
+		}
+    }
+	
+	public void update(T entity){
+        try{
+            JPAUtil.beginTransaction();            
+            dao.update(entity);
+            JPAUtil.commit();
+        }
+        catch(Exception e){            
+            JPAUtil.rollBack();
+        }
+        finally{
+			JPAUtil.closeEntityManager();
+		}
+    }
+	
 	public T getById(PK pk){
 		T entity = null;
 		
@@ -64,5 +92,9 @@ public class AbstractService<PK, T> {
 	
 	public List<T> findAll(){
         return dao.findAll();
+    }
+	
+	public List<T> findAllById(String propertyName,PK pk){
+        return dao.findAllById(propertyName, pk);
     }
 }

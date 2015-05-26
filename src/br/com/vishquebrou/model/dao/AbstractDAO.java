@@ -82,6 +82,12 @@ public class AbstractDAO<PK, T> {
 				.getResultList();
 	}
 	
+	public List<T> findAllById(String propertyName, PK pk) {
+		this.entityManager = JPAUtil.getEntityManager();
+		return entityManager.createQuery(("FROM " + getTypeClass().getName() + " where "+ propertyName+ "_id = " + pk))
+				.getResultList();
+	}
+	
 	private Class<?> getTypeClass() {
 		Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass().
 				getGenericSuperclass()).getActualTypeArguments()[1];

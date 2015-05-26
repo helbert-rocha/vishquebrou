@@ -1,30 +1,83 @@
 <jsp:include page="header.jsp"/>
 <jsp:include page="nav_user.jsp"/>
-
-<div>
-  <md-content class="md-padding">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/vishquebrou-taglib.tld" prefix="vishquebrou" %>
+<div layout="row" layout-align="center start" class="pane-user">
+  <md-content class="md-padding user-info">
     <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Todas">
+      <md-tab label="Solicitações">
         <md-content class="md-padding">
-          <h2 class="md-display-2">Todas</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+          
+          <vishquebrou:show className="md-display-2" title="Mensagens">
+          </vishquebrou:show> 
+          
+           <md-content>
+			    <section>
+			      <md-list layout-padding>
+			        <md-list-item class="md-3-line">
+			            <div class="md-list-item-text">
+			              <c:forEach var="info" items="${infos}">
+						    <div layout="column">
+							    <p>${ info.description }</p>
+							    <div layout="row">
+							  
+								    <p>${ info.date }</p>
+								    <div class="right">
+								    	 <p>${ info.status }</p>
+								    	
+								    </div>
+								     
+								</div>
+								<p>__________________________________________________</p>  
+							</div>
+							
+						</c:forEach>
+			            </div>
+			        </md-list-item>
+			      </md-list>
+			    </section>
+			    </md-content>
         </md-content>
       </md-tab>
-      <md-tab label="two">
+      <md-tab label="Consultar Cadastro">
         <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Two</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
+        
+        <vishquebrou:show className="md-display-2" title="Consultar Cadastro">
+          </vishquebrou:show>  		
+           
+           <label><b>Nome de Usuário</b></label>
+          	<p><label>${employee.username}</label></p>
+        
+           
+           	<label><b>Nome</b></label>
+          	<p><label>${employee.fname}</label></p>
+        
+          
+         	<label><b>Sobrenome</b></label>
+          	<p><label>${employee.lname}</label></p>
+         
+         	<label><b>Email</b></label>
+          	<p><label>${employee.email}</label></p>
+          
+         	<label><b>Empresa</b></label>
+          	<p><label>${employee.enterprise.name}</label></p>
+          
+          	
+       		<label><b>Ramo da Empresa</b></label>
+          	<p><label>${employee.enterprise.type}</label></p>
+         
+         	<label><b>Estado</b></label>
+          	<p><label>${employee.enterprise.state}</label></p>
+          
+			<label><b>Cidade</b></label>
+          	<p><label>${employee.enterprise.city}</label></p>
+        
+          
+         	<label><b>Bairro</b></label>
+          	<p><label>${employee.enterprise.district}</label></p>
+         
+       
       </md-tab>
-      <md-tab label="Alterar Cadastro">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Alterar cadastro</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-    </md-tabs>
   </md-content>
 </div>
 

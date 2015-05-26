@@ -52,7 +52,7 @@ public class RegisterServlet extends HttpServlet {
 		String lname = request.getParameter("lname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String confPassword = request.getParameter("confPassword");
+		String confPassword = request.getParameter("confirmPassword");
 		String enterprise = request.getParameter("enterprise");
 		String type = request.getParameter("type");		
 		String state = request.getParameter("state");
@@ -73,6 +73,9 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("state", state);
 		request.setAttribute("city", city);
 		request.setAttribute("district", district);
+		
+		//out.println(password);
+		//out.println(confPassword);
 		
 		if(!password.equals(confPassword)){
 			request.setAttribute("errorPswd", true);

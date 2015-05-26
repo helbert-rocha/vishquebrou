@@ -1,6 +1,8 @@
 package br.com.vishquebrou.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import br.com.vishquebrou.model.Employee;
+import br.com.vishquebrou.model.Enterprise;
+import br.com.vishquebrou.model.Info;
+import br.com.vishquebrou.model.service.EmployeeService;
+import br.com.vishquebrou.model.service.EnterpriseService;
+import br.com.vishquebrou.model.service.InfoService;
 
 /**
  * Servlet implementation class UserServlet
@@ -30,11 +39,26 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		HttpSession session = ((HttpServletRequest)request).getSession();
+		
+		String username;
+		
+		username = session.getAttribute("user") == null ? null : session.getAttribute("user").toString();
+		//out.println(username);
+		Employee employee = new Employee();
+		
+		EmployeeService employeeService = new EmployeeService();
+		employee = employeeService.getByProperty("username", username);
+		request.setAttribute("employee", employee);	
+		InfoService infoService = new InfoService();
+		Long enId = employee.getEnterprise().getId();
+		
+		ArrayList<Info> infos = (ArrayList<Info>) infoService.findAllById("enterprise", enId);
+		
+		request.setAttribute("infos", infos);
 		
 		String address = "/WEB-INF/views/user.jsp";
-		request.setAttribute("name", session.getAttribute("user"));
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(address);
 		dispatcher.forward(request, response);
 	}
